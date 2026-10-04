@@ -1,0 +1,403 @@
+<!doctype html>
+<html lang="th">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#061d23" />
+  <meta name="description" content="THE PLANET IDOL — trainee universe portal" />
+  <title>THE PLANET IDOL</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700&family=Noto+Sans+Thai:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#03070a;
+      --panel:#071117;
+      --panel2:#0b1720;
+      --line:rgba(242,207,214,.15);
+      --text:#f8f5f6;
+      --muted:#a8a8b1;
+      --wine:#450A18;
+      --burg:#7B182F;
+      --rose:#C43556;
+      --blush:#F9CCCB;
+      --cyan:#86DDE4;
+      --teal:#197074;
+      --deepteal:#082D36;
+      --whiteglow:#f7fbff;
+      --shadow:0 24px 70px rgba(0,0,0,.52);
+      --radius:22px;
+    }
+    *{box-sizing:border-box}
+    html,body{margin:0;padding:0;background:var(--bg);color:var(--text);font-family:'Noto Sans Thai',system-ui,sans-serif;overflow:hidden}
+    body{min-height:100vh}
+    button,input{font:inherit}
+    button{cursor:pointer}
+    .app{height:100vh;position:relative;overflow:hidden;background:
+      radial-gradient(circle at 15% 20%, rgba(196,53,86,.13), transparent 26%),
+      radial-gradient(circle at 78% 30%, rgba(134,221,228,.08), transparent 24%),
+      radial-gradient(circle at 50% 80%, rgba(123,24,47,.08), transparent 35%),
+      linear-gradient(180deg,#020507 0%,#05090d 55%,#020609 100%)}
+    .noise{position:absolute;inset:0;pointer-events:none;opacity:.045;mix-blend-mode:screen;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160' viewBox='0 0 160 160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.22'/%3E%3C/svg%3E")}
+    .stars,.stars::before,.stars::after{position:absolute;inset:-30%;content:"";pointer-events:none}
+    .stars{background-image:radial-gradient(circle, rgba(255,255,255,.75) 0 1px, transparent 1.5px);background-size:80px 80px;opacity:.23;animation:drift 35s linear infinite}
+    .stars::before{background-image:radial-gradient(circle, rgba(134,221,228,.55) 0 1px, transparent 1.6px);background-size:123px 123px;transform:rotate(18deg);animation:drift2 50s linear infinite}
+    .stars::after{background-image:radial-gradient(circle, rgba(244,183,194,.48) 0 1px, transparent 1.4px);background-size:177px 177px;transform:rotate(-12deg);animation:drift 55s linear infinite reverse}
+    @keyframes drift{to{transform:translate3d(4%,4%,0)}}
+    @keyframes drift2{to{transform:translate3d(-3%,2%,0) rotate(18deg)}}
+
+    .topbar{position:absolute;top:0;left:0;right:0;height:72px;display:flex;align-items:center;justify-content:space-between;padding:0 18px;z-index:40;background:linear-gradient(180deg,rgba(3,7,10,.94),rgba(3,7,10,.45),transparent);backdrop-filter:blur(12px)}
+    .brand{display:flex;align-items:center;gap:10px;border:0;background:transparent;color:#fff;letter-spacing:.12em}
+    .brand-mark{width:34px;height:34px;border-radius:50%;border:1.2px solid var(--whiteglow);position:relative;box-shadow:0 0 18px rgba(247,251,255,.28);}
+    .brand-mark:before,.brand-mark:after{content:"";position:absolute;left:50%;top:50%;translate:-50% -50%;border:1px solid rgba(247,251,255,.9);border-radius:50%;}
+    .brand-mark:before{width:45px;height:14px;transform:rotate(-26deg)}
+    .brand-mark:after{width:56px;height:22px;transform:rotate(-26deg);opacity:.35}
+    .brand-title{font-family:Kanit,sans-serif;font-weight:600;font-size:15px;line-height:1}.brand-sub{font-size:9px;color:#9fa7ac;letter-spacing:.26em;margin-top:2px}
+    .top-actions{display:flex;gap:8px;align-items:center}
+    .icon-btn{width:38px;height:38px;border-radius:50%;background:rgba(255,255,255,.045);border:1px solid var(--line);color:#fff;display:grid;place-items:center;transition:.25s}
+    .icon-btn:hover{background:rgba(255,255,255,.09);transform:translateY(-2px)}
+    .sound-pulse{width:8px;height:8px;border-radius:50%;background:var(--cyan);box-shadow:0 0 0 0 rgba(134,221,228,.5);animation:pulse 1.8s infinite}
+    @keyframes pulse{70%{box-shadow:0 0 0 12px rgba(134,221,228,0)}}
+
+    .shell{position:absolute;inset:72px 0 72px;display:flex;z-index:10}
+    .side-nav{width:92px;padding:18px 10px;display:flex;flex-direction:column;gap:8px;align-items:center;border-right:1px solid var(--line);background:linear-gradient(90deg,rgba(4,8,12,.94),rgba(4,8,12,.55));backdrop-filter:blur(10px);z-index:35}
+    .navbtn{width:70px;min-height:58px;padding:8px 5px;border:1px solid transparent;background:transparent;color:#858e94;border-radius:16px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;transition:.25s;text-align:center}
+    .navbtn span{font-size:9px;letter-spacing:.07em;line-height:1.05}.navbtn b{font-size:14px;font-weight:600;line-height:1}
+    .navbtn:hover{color:#fff;background:rgba(255,255,255,.04);border-color:rgba(255,255,255,.06)}
+    .navbtn.active{color:#fff;background:linear-gradient(180deg,rgba(196,53,86,.18),rgba(8,45,54,.2));border-color:rgba(196,53,86,.35);box-shadow:inset 0 0 22px rgba(196,53,86,.08),0 7px 28px rgba(0,0,0,.25)}
+    .navbtn.active b{color:var(--blush)}
+
+    .stage{position:relative;flex:1;min-width:0;height:100%;overflow:hidden}
+    .screen{position:absolute;inset:0;overflow:auto;overflow-x:hidden;padding:28px 20px 40px;display:none;animation:screenIn .35s ease both;scrollbar-width:thin;scrollbar-color:rgba(255,255,255,.15) transparent}
+    .screen.active{display:block}
+    @keyframes screenIn{from{opacity:0;transform:scale(.985) translateY(7px)}to{opacity:1;transform:none}}
+    .screen::-webkit-scrollbar{width:7px}.screen::-webkit-scrollbar-thumb{background:rgba(255,255,255,.12);border-radius:12px}
+
+    .home-grid{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:minmax(0,1.45fr) minmax(260px,.75fr);gap:16px;min-height:100%}
+    .hero{position:relative;border:1px solid rgba(255,255,255,.07);background:linear-gradient(145deg,rgba(255,255,255,.04),rgba(255,255,255,.01));border-radius:30px;min-height:560px;overflow:hidden;display:flex;align-items:center;justify-content:center;box-shadow:var(--shadow)}
+    .hero::before{content:"";position:absolute;inset:-20%;background:conic-gradient(from 45deg,transparent 0 20%,rgba(134,221,228,.06),transparent 45%,rgba(196,53,86,.08),transparent 72%);animation:spin 22s linear infinite}
+    .hero::after{content:"";position:absolute;width:70%;height:2px;bottom:15%;left:15%;background:linear-gradient(90deg,transparent,var(--teal),transparent);filter:blur(6px);opacity:.55}
+    @keyframes spin{to{transform:rotate(360deg)}}
+    .planet-wrap{position:relative;width:min(76vw,500px);aspect-ratio:1;display:grid;place-items:center;z-index:2}
+    .planet-svg{width:100%;height:100%;filter:drop-shadow(0 0 10px rgba(255,255,255,.4)) drop-shadow(0 0 55px rgba(134,221,228,.11));animation:planetFloat 6s ease-in-out infinite}
+    @keyframes planetFloat{50%{transform:translateY(-7px) rotate(.5deg)}}
+    .planet-word{position:absolute;bottom:-4px;left:50%;transform:translateX(-50%);white-space:nowrap;font-family:Kanit,sans-serif;letter-spacing:.46em;font-size:11px;color:#cad4d8;opacity:.7}
+    .hero-copy{position:absolute;left:24px;right:24px;bottom:22px;z-index:4;display:flex;align-items:end;justify-content:space-between;gap:20px}
+    .kicker{font-size:10px;letter-spacing:.26em;color:var(--cyan);text-transform:uppercase}.hero h1{font-family:Kanit,sans-serif;font-size:clamp(32px,7vw,70px);line-height:.9;margin:8px 0 10px;letter-spacing:.05em}.hero p{margin:0;color:#b5b9bd;font-size:12px;max-width:440px;line-height:1.7}
+    .cta-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:15px}.primary,.secondary{border-radius:999px;padding:10px 15px;border:1px solid rgba(255,255,255,.13);font-weight:700;font-size:11px;letter-spacing:.08em}.primary{background:linear-gradient(90deg,var(--burg),var(--rose));color:#fff;box-shadow:0 10px 30px rgba(196,53,86,.18)}.secondary{background:rgba(255,255,255,.04);color:#fff}
+    .home-side{display:grid;gap:12px;grid-template-rows:auto 1fr 1fr}
+    .panel{border:1px solid var(--line);background:linear-gradient(180deg,rgba(255,255,255,.045),rgba(255,255,255,.02));border-radius:22px;padding:15px;box-shadow:0 15px 45px rgba(0,0,0,.26)}
+    .panel-head{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:11px}.panel-head h3{font-size:12px;margin:0;font-family:Kanit,sans-serif;letter-spacing:.08em}.panel-head small{font-size:9px;color:#8e9aa0}.link{border:0;background:none;color:var(--cyan);font-size:10px}
+    .news-item{padding:11px 0;border-top:1px solid rgba(255,255,255,.08);display:flex;gap:9px;align-items:flex-start}.news-item:first-child{border-top:0}.badge{min-width:37px;height:22px;border-radius:999px;display:grid;place-items:center;font-size:8px;letter-spacing:.1em;background:rgba(196,53,86,.16);border:1px solid rgba(196,53,86,.35);color:#ffcbd4}.news-item strong{font-size:11px;display:block;line-height:1.35}.news-item span{font-size:9px;color:#828b91;display:block;margin-top:3px}
+    .stats{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}.stat{border:1px solid rgba(255,255,255,.07);background:#051015;border-radius:16px;padding:12px}.stat .n{font-family:Kanit,sans-serif;font-size:23px;color:#fff}.stat .l{font-size:8px;letter-spacing:.1em;color:#737e85}
+
+    .section-title{max-width:1200px;margin:0 auto 17px;display:flex;align-items:end;justify-content:space-between;gap:12px}.section-title h2{font-family:Kanit,sans-serif;font-size:30px;line-height:1;margin:0;letter-spacing:.04em}.section-title p{margin:6px 0 0;color:#838e94;font-size:11px}.section-index{font-family:Kanit,sans-serif;color:#6c767c;font-size:11px;letter-spacing:.14em}
+    .cards{max-width:1200px;margin:auto;display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.cards.two{grid-template-columns:repeat(2,1fr)}
+    .card{border:1px solid var(--line);background:linear-gradient(180deg,rgba(255,255,255,.045),rgba(255,255,255,.018));border-radius:22px;padding:15px;min-width:0;box-shadow:0 14px 40px rgba(0,0,0,.2);transition:.25s}.card:hover{transform:translateY(-3px);border-color:rgba(196,53,86,.25)}
+    .card h3{font-family:Kanit,sans-serif;font-size:18px;margin:0 0 5px}.card p{font-size:10px;color:#88939a;line-height:1.7;margin:0}.eyebrow{font-size:8px;letter-spacing:.18em;color:var(--cyan);margin-bottom:7px}.arrow{float:right;color:#929ca0}
+
+    .trainee-grid{max-width:1200px;margin:auto;display:grid;grid-template-columns:repeat(4,1fr);gap:12px}.trainee{padding:0;overflow:hidden}.avatar{aspect-ratio:1;background:radial-gradient(circle at 50% 30%,rgba(134,221,228,.15),transparent 34%),linear-gradient(145deg,#0c1e27,#081015 45%,#160810);display:grid;place-items:center;position:relative}.avatar::before{content:"";position:absolute;inset:12%;border:1px solid rgba(255,255,255,.12);border-radius:50%}.avatar-mark{font-family:Kanit,sans-serif;font-size:33px;color:rgba(255,255,255,.35);letter-spacing:.06em}.trainee-body{padding:13px}.tagrow{display:flex;gap:5px;flex-wrap:wrap;margin:8px 0}.tag{border:1px solid rgba(134,221,228,.18);background:rgba(134,221,228,.06);color:#a9ebef;border-radius:999px;padding:4px 7px;font-size:8px}.tag.rose{border-color:rgba(196,53,86,.25);background:rgba(196,53,86,.08);color:#ffc1cb}.trainee-name{font-family:Kanit,sans-serif;font-size:16px}.trainee-meta{font-size:9px;color:#79848a}.view-btn{width:100%;margin-top:10px;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.03);color:#fff;border-radius:12px;padding:8px;font-size:9px}
+
+    .filterbar{max-width:1200px;margin:0 auto 12px;display:flex;gap:8px;align-items:center;flex-wrap:wrap}.seg{border:1px solid var(--line);background:rgba(255,255,255,.03);color:#8c969c;border-radius:999px;padding:8px 12px;font-size:9px}.seg.active{background:rgba(196,53,86,.14);border-color:rgba(196,53,86,.3);color:#ffd4da}
+    .tablewrap{max-width:1200px;margin:auto;overflow:auto;border:1px solid var(--line);border-radius:20px;background:rgba(255,255,255,.02)}table{width:100%;border-collapse:collapse;min-width:650px}th,td{padding:12px 13px;border-bottom:1px solid rgba(255,255,255,.06);font-size:9px;text-align:left}th{font-weight:600;color:#9da7ac;background:rgba(255,255,255,.03);position:sticky;top:0}.rank{font-family:Kanit,sans-serif;font-size:17px}.up{color:#9ceef2}.down{color:#ffb0bd}
+
+    .program-layout{max-width:1200px;margin:auto;display:grid;grid-template-columns:1.2fr .8fr;gap:12px}.monthbar{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:10px}.monthbar strong{font-family:Kanit,sans-serif;font-size:21px}.calendar{display:grid;grid-template-columns:repeat(7,1fr);gap:5px}.dow{font-size:8px;color:#68737a;text-align:center;padding:6px 0}.day{min-height:62px;border:1px solid rgba(255,255,255,.06);border-radius:12px;padding:6px;background:#041017;position:relative;overflow:hidden}.day.muted{opacity:.27}.day.today{border-color:rgba(134,221,228,.4);box-shadow:inset 0 0 20px rgba(134,221,228,.04)}.daynum{font-family:Kanit,sans-serif;font-size:11px;color:#c9d0d3}.evt-dot{width:5px;height:5px;border-radius:50%;background:var(--rose);box-shadow:0 0 8px rgba(196,53,86,.65);display:inline-block;margin-right:4px}.dayevent{font-size:7px;color:#99a7ac;line-height:1.3;margin-top:5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.event-list{display:grid;gap:8px}.event-card{padding:11px;border-radius:16px;border:1px solid rgba(255,255,255,.07);background:#051117}.event-date{font-size:8px;color:var(--cyan);letter-spacing:.11em}.event-card b{display:block;margin-top:3px;font-size:11px}.event-card span{font-size:8px;color:#737e84;display:block;margin-top:3px}
+
+    .rules{max-width:1200px;margin:auto;display:grid;grid-template-columns:1fr 1fr;gap:12px}.rule-card{padding:17px}.rule-num{font-family:Kanit,sans-serif;font-size:30px;color:rgba(196,53,86,.6);line-height:1}.rule-card h3{margin:6px 0 6px;font-family:Kanit,sans-serif}.rule-card p{margin:0;font-size:10px;color:#88939a;line-height:1.75}.check{margin-top:9px;display:grid;gap:5px}.check div{font-size:9px;color:#bac2c5}.check i{font-style:normal;color:var(--cyan);margin-right:5px}
+
+    .uniform-tabs{max-width:1200px;margin:0 auto 12px;display:flex;gap:8px}.uniform-panel{max-width:1200px;margin:auto;display:grid;grid-template-columns:1fr 1fr;gap:12px}.uniform-visual{border:1px solid var(--line);border-radius:25px;background:radial-gradient(circle at 50% 30%,rgba(134,221,228,.08),transparent 35%),#051016;min-height:430px;display:grid;place-items:center;position:relative;overflow:hidden}.silhouette{width:58%;height:80%;position:relative}.head{width:74px;height:74px;border-radius:50%;background:linear-gradient(145deg,#eef1f1,#8d9ba0);position:absolute;top:0;left:50%;translate:-50%}.torso{position:absolute;top:66px;left:50%;translate:-50%;width:170px;height:230px;background:linear-gradient(90deg,#0c1820,#f4f5f6 48%,#d1d7d9 52%,#081118);clip-path:polygon(35% 0,65% 0,82% 17%,100% 100%,0 100%,18% 17%);border-radius:28px 28px 12px 12px}.accent-band{position:absolute;left:50%;translate:-50%;top:92px;width:175px;height:24px;border-radius:5px;background:var(--rose);opacity:.95}.legs{position:absolute;top:280px;left:50%;translate:-50%;display:flex;gap:10px}.leg{width:72px;height:145px;background:#0a1115;border-radius:12px}.uniform-info{display:grid;gap:12px}.spec-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}.spec{padding:12px;border:1px solid rgba(255,255,255,.07);border-radius:15px;background:#051016}.spec b{font-size:10px;display:block}.spec span{font-size:8px;color:#78858b;display:block;margin-top:4px;line-height:1.5}
+
+    .music-layout{max-width:1200px;margin:auto;display:grid;grid-template-columns:1.1fr .9fr;gap:12px}.player{border:1px solid rgba(134,221,228,.13);background:radial-gradient(circle at 80% 15%,rgba(134,221,228,.06),transparent 28%),linear-gradient(145deg,rgba(196,53,86,.09),rgba(255,255,255,.02));border-radius:25px;padding:18px;min-height:430px;position:relative;overflow:hidden}.disc{width:180px;height:180px;border-radius:50%;border:1px solid rgba(255,255,255,.28);margin:22px auto;display:grid;place-items:center;position:relative;box-shadow:0 0 35px rgba(196,53,86,.16)}.disc::before,.disc::after{content:"";position:absolute;border-radius:50%;border:1px solid rgba(255,255,255,.09)}.disc::before{inset:19px}.disc::after{inset:42px}.disc.spin{animation:record 4.8s linear infinite}@keyframes record{to{transform:rotate(360deg)}}.disc-center{width:32px;height:32px;border-radius:50%;background:radial-gradient(circle,#fff 0 3px,#cdd8dc 4px 9px,#081015 10px);border:1px solid #fff}.track-meta{text-align:center}.track-meta h3{font-family:Kanit,sans-serif;font-size:23px;margin:3px 0}.track-meta p{margin:0;color:#768187;font-size:9px}.audio-controls{display:flex;justify-content:center;gap:8px;margin-top:14px}.circle-control{width:44px;height:44px;border-radius:50%;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.05);color:#fff}.progress{height:5px;border-radius:99px;background:#16242a;overflow:hidden;margin:16px 0}.progress i{display:block;width:28%;height:100%;background:linear-gradient(90deg,var(--burg),var(--cyan))}.upload{margin-top:14px}.upload label{display:flex;align-items:center;justify-content:center;gap:7px;padding:12px;border:1px dashed rgba(134,221,228,.25);background:rgba(134,221,228,.035);border-radius:14px;font-size:9px;color:#b9e9ed}.upload input{display:none}.playlist{display:grid;gap:8px}.track{padding:11px;border:1px solid rgba(255,255,255,.07);border-radius:15px;background:#041015;display:flex;align-items:center;gap:10px}.track button{border:0;background:rgba(255,255,255,.04);color:#fff;width:32px;height:32px;border-radius:50%}.track .tname{font-size:10px;font-weight:700}.track .tmeta{font-size:8px;color:#69757a;margin-top:2px}
+
+    .stage-grid{max-width:1200px;margin:auto;display:grid;grid-template-columns:repeat(2,1fr);gap:12px}.stage-card{min-height:170px;position:relative;overflow:hidden}.stage-card::after{content:"";position:absolute;right:-18px;bottom:-22px;width:120px;height:120px;border-radius:50%;border:1px solid rgba(134,221,228,.1)}.stage-num{font-family:Kanit,sans-serif;font-size:48px;color:rgba(255,255,255,.08);position:absolute;right:10px;top:4px}.stage-card h3{position:relative;z-index:2}.stage-card p{max-width:90%}.mission{margin-top:11px;padding-top:10px;border-top:1px solid rgba(255,255,255,.07);font-size:9px;color:#aeb8bc}
+
+    .modal{position:fixed;inset:0;z-index:100;display:none;align-items:center;justify-content:center;padding:18px;background:rgba(0,0,0,.74);backdrop-filter:blur(18px)}.modal.open{display:flex}.modal-card{width:min(720px,100%);max-height:90vh;overflow:auto;border:1px solid rgba(255,255,255,.12);border-radius:26px;background:linear-gradient(180deg,#09131a,#04090d);box-shadow:0 30px 90px rgba(0,0,0,.6);padding:18px;animation:modalIn .3s ease}.modal-top{display:flex;align-items:center;justify-content:space-between;gap:10px}.close{width:36px;height:36px;border-radius:50%;border:1px solid rgba(255,255,255,.1);color:#fff;background:rgba(255,255,255,.04)}.profile-head{display:grid;grid-template-columns:130px 1fr;gap:15px;align-items:end;margin:13px 0}.profile-avatar{width:130px;height:130px;border-radius:22px;background:radial-gradient(circle at 50% 30%,rgba(134,221,228,.16),transparent 34%),linear-gradient(145deg,#0b1b22,#180a11);border:1px solid rgba(255,255,255,.08);display:grid;place-items:center;font-family:Kanit,sans-serif;font-size:40px;color:rgba(255,255,255,.33)}.profile-head h2{font-family:Kanit,sans-serif;font-size:30px;margin:0}.profile-head p{margin:5px 0 0;color:#7f8a8f;font-size:10px}.profile-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:7px}.pstat{padding:10px;border:1px solid rgba(255,255,255,.07);background:#041015;border-radius:14px}.pstat b{font-family:Kanit,sans-serif;font-size:17px}.pstat span{font-size:7px;color:#718087;display:block;margin-top:2px}.profile-bio{margin-top:11px;padding:12px;border-radius:15px;background:#041015;border:1px solid rgba(255,255,255,.07);font-size:10px;color:#a6b0b4;line-height:1.7}.notice{padding:14px;border:1px solid rgba(196,53,86,.22);background:linear-gradient(135deg,rgba(196,53,86,.09),rgba(8,45,54,.08));border-radius:16px;margin-top:11px}.notice h4{font-family:Kanit,sans-serif;margin:0 0 4px}.notice p{margin:0;font-size:9px;color:#9aa4a8;line-height:1.65}
+    @keyframes modalIn{from{opacity:0;transform:translateY(12px) scale(.98)}to{opacity:1;transform:none}}
+
+    .bottom-nav{position:absolute;left:0;right:0;bottom:0;height:72px;display:none;align-items:center;justify-content:space-around;z-index:40;background:rgba(3,7,10,.9);border-top:1px solid var(--line);backdrop-filter:blur(16px)}.bottom-nav .navbtn{min-width:58px;width:auto;height:58px}
+    .tiny-footer{max-width:1200px;margin:25px auto 0;color:#545f64;font-size:8px;letter-spacing:.12em;text-align:center}
+
+    @media(max-width:900px){
+      .shell{inset:68px 0 72px}.topbar{height:68px}.side-nav{display:none}.bottom-nav{display:flex}
+      .home-grid,.program-layout,.music-layout,.rules,.uniform-panel{grid-template-columns:1fr}.home-side{grid-template-rows:auto auto auto}.hero{min-height:610px}.cards{grid-template-columns:1fr 1fr}.trainee-grid{grid-template-columns:1fr 1fr}.stage-grid{grid-template-columns:1fr}
+      .hero-copy{flex-direction:column;align-items:flex-start}.planet-wrap{width:min(88vw,470px)}
+      .screen{padding:18px 13px 26px}.section-title h2{font-size:25px}
+    }
+    @media(max-width:520px){
+      .brand-sub{display:none}.top-actions .icon-btn:first-child{display:none}.hero{border-radius:24px;min-height:620px}.hero h1{font-size:40px}.hero p{font-size:10px}.cta-row{margin-top:11px}.cards,.cards.two{grid-template-columns:1fr}.trainee-grid{grid-template-columns:1fr 1fr}.trainee-body{padding:10px}.trainee-name{font-size:14px}.uniform-visual{min-height:380px}.profile-head{grid-template-columns:92px 1fr}.profile-avatar{width:92px;height:92px}.profile-head h2{font-size:23px}.profile-stats{grid-template-columns:1fr 1fr}.calendar{gap:4px}.day{min-height:54px;padding:5px}.dayevent{font-size:6.5px}.dow{font-size:7px}.monthbar strong{font-size:18px}.screen{padding-bottom:30px}.bottom-nav .navbtn span{font-size:7px}.bottom-nav .navbtn b{font-size:12px}
+    }
+  </style>
+</head>
+<body>
+<div class="app">
+  <div class="stars"></div><div class="noise"></div>
+  <header class="topbar">
+    <button class="brand" onclick="go('home')" aria-label="THE PLANET IDOL home">
+      <span class="brand-mark"></span><span><span class="brand-title">THE PLANET IDOL</span><span class="brand-sub">TRAINEE UNIVERSE</span></span>
+    </button>
+    <div class="top-actions">
+      <button class="icon-btn" onclick="go('music')" title="Music">♫</button>
+      <button class="icon-btn" id="soundBtn" onclick="toggleSound()" title="Sound"><span class="sound-pulse"></span></button>
+    </div>
+  </header>
+
+  <div class="shell">
+    <nav class="side-nav" id="sideNav"></nav>
+    <main class="stage">
+      <section class="screen active" data-screen="home">
+        <div class="home-grid">
+          <div class="hero">
+            <div class="planet-wrap">
+              <svg class="planet-svg" viewBox="0 0 600 600" aria-label="white line planet">
+                <defs>
+                  <filter id="glow"><feGaussianBlur stdDeviation="5" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+                  <radialGradient id="planetGlow"><stop offset="0" stop-color="#fff" stop-opacity=".26"/><stop offset=".75" stop-color="#fff" stop-opacity=".04"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></radialGradient>
+                </defs>
+                <circle cx="300" cy="300" r="210" fill="url(#planetGlow)"/>
+                <circle cx="300" cy="300" r="174" fill="none" stroke="#f9fbff" stroke-width="2" opacity=".95" filter="url(#glow)"/>
+                <ellipse cx="300" cy="303" rx="255" ry="80" fill="none" stroke="#fff" stroke-width="2" opacity=".96" transform="rotate(-18 300 303)" filter="url(#glow)"/>
+                <ellipse cx="300" cy="303" rx="265" ry="92" fill="none" stroke="#fff" stroke-width="1" opacity=".35" transform="rotate(-18 300 303)"/>
+                <path d="M118 267 Q300 338 482 265" fill="none" stroke="#fff" stroke-width="1.2" opacity=".62"/>
+                <path d="M160 190 Q300 230 440 190" fill="none" stroke="#fff" stroke-width="1" opacity=".32"/>
+                <path d="M205 415 Q300 374 396 415" fill="none" stroke="#fff" stroke-width="1" opacity=".33"/>
+                <circle cx="214" cy="228" r="3" fill="#fff"/><circle cx="384" cy="335" r="2.4" fill="#fff"/><circle cx="270" cy="160" r="2" fill="#fff"/>
+                <g opacity=".8" fill="#fff"><circle cx="89" cy="113" r="2"/><circle cx="477" cy="103" r="2"/><circle cx="529" cy="347" r="2"/><circle cx="115" cy="430" r="1.8"/><circle cx="421" cy="463" r="1.5"/><circle cx="160" cy="96" r="1.3"/></g>
+              </svg>
+              <div class="planet-word">ONE PLANET · ONE DREAM · ONE STAGE</div>
+            </div>
+            <div class="hero-copy">
+              <div>
+                <div class="kicker">Welcome to the trainee universe</div>
+                <h1>THE PLANET<br><span style="color:#f9cccb">IDOL</span></h1>
+                <p>พื้นที่รวมข้อมูลเด็กฝึก โปรแกรมการฝึก ภารกิจ ข่าวประกาศ และเสียงเพลงของโปรเจกต์ไอดอลในจักรวาลเดียว — เปิดทีละส่วน ไม่ต้องเลื่อนหนีจากเรื่องที่กำลังดู</p>
+                <div class="cta-row"><button class="primary" onclick="go('trainees')">ENTER TRAINEES</button><button class="secondary" onclick="go('program')">VIEW PROGRAM</button></div>
+              </div>
+              <div style="min-width:110px;text-align:right"><div class="kicker">SEASON 01</div><div style="font-family:Kanit;font-size:12px;margin-top:5px">JAN — MAY 2027</div></div>
+            </div>
+          </div>
+          <aside class="home-side">
+            <div class="panel"><div class="panel-head"><h3>OFFICIAL NOTICE</h3><button class="link" onclick="openNotice(0)">VIEW ALL →</button></div><div class="news-item"><span class="badge">NEW</span><div><strong>เปิดระบบ THE PLANET IDOL — SEASON 01</strong><span>ประกาศล่าสุด · 05 OCT 2026</span></div></div><div class="news-item"><span class="badge">INFO</span><div><strong>กำหนดส่งโปรไฟล์และเพลงแนะนำตัว</strong><span>ดูรายละเอียดใน PROGRAM</span></div></div><div class="news-item"><span class="badge">RULE</span><div><strong>อัปเดตกฎเครื่องแบบและวินัยเด็กฝึก</strong><span>มีผลตลอด Season 01</span></div></div></div>
+            <div class="panel"><div class="panel-head"><h3>PLANET STATUS</h3><small>LIVE DATA</small></div><div class="stats"><div class="stat"><div class="n">40</div><div class="l">TRAINEES SLOT</div></div><div class="stat"><div class="n">5</div><div class="l">MONTHS</div></div><div class="stat"><div class="n">4</div><div class="l">STAGES</div></div><div class="stat"><div class="n">∞</div><div class="l">DREAMS</div></div></div></div>
+            <div class="panel"><div class="panel-head"><h3>NOW PLAYING</h3><button class="link" onclick="go('music')">MUSIC →</button></div><div style="display:flex;gap:10px;align-items:center"><div class="disc" style="width:70px;height:70px;margin:0;flex:0 0 auto" id="miniDisc"><div class="disc-center" style="width:22px;height:22px"></div></div><div><strong id="miniTrack" style="font-size:11px">THE PLANET — INTRO</strong><span style="display:block;color:#727c82;font-size:8px;margin-top:4px">ใส่ MP3 ของคุณได้ใน MUSIC</span></div></div></div>
+          </aside>
+        </div>
+        <div class="tiny-footer">THE PLANET IDOL · OFFICIAL TRAINEE PORTAL · SEASON 01</div>
+      </section>
+
+      <section class="screen" data-screen="trainees">
+        <div class="section-title"><div><div class="section-index">01 / MEET THE TRAINEES</div><h2>TRAINEES</h2><p>ช่องข้อมูลเด็กฝึก — แตะโปรไฟล์เพื่อเปิดหน้ารายละเอียดแบบเต็ม</p></div><div style="font-size:9px;color:#6e797f">40 SLOTS / 20 B · 20 G</div></div>
+        <div class="filterbar"><button class="seg active" onclick="filterTrainees('all',this)">ALL</button><button class="seg" onclick="filterTrainees('B',this)">B-TRAINEES</button><button class="seg" onclick="filterTrainees('G',this)">G-TRAINEES</button><button class="seg" onclick="filterTrainees('vocal',this)">VOCAL</button><button class="seg" onclick="filterTrainees('dance',this)">DANCE</button></div>
+        <div class="trainee-grid" id="traineeGrid"></div>
+      </section>
+
+      <section class="screen" data-screen="ranking">
+        <div class="section-title"><div><div class="section-index">02 / OFFICIAL RANKING</div><h2>TRAINEE RANKING</h2><p>ตารางคะแนนตัวอย่างสำหรับระบบจัดอันดับ — เปลี่ยนข้อมูลได้จาก JavaScript ด้านล่าง</p></div></div>
+        <div class="filterbar"><button class="seg active" onclick="showRank('all',this)">OVERALL</button><button class="seg" onclick="showRank('B',this)">B-TRAINEES</button><button class="seg" onclick="showRank('G',this)">G-TRAINEES</button></div>
+        <div class="tablewrap"><table><thead><tr><th>#</th><th>TRAINEE</th><th>TEAM</th><th>VOCAL</th><th>DANCE</th><th>RAP</th><th>TOTAL</th><th>TREND</th></tr></thead><tbody id="rankBody"></tbody></table></div>
+      </section>
+
+      <section class="screen" data-screen="stages">
+        <div class="section-title"><div><div class="section-index">03 / MISSIONS</div><h2>STAGE BATTLE</h2><p>เส้นทางจากเด็กฝึกสู่ Debut — แต่ละด่านเปิดดูภารกิจและเกณฑ์คะแนน</p></div></div>
+        <div class="stage-grid">
+          <article class="card stage-card"><span class="stage-num">01</span><div class="eyebrow">JANUARY · FOUNDATION</div><h3>FIRST STAGE / TEAM BATTLE</h3><p>รวมทีมชายและหญิงเพื่อประชันพื้นฐานการร้อง เต้น และการทำงานร่วมกัน</p><div class="mission">MISSION · LIVE PERFORMANCE · TEAM SYNERGY · 1 CHOREOGRAPHY</div></article>
+          <article class="card stage-card"><span class="stage-num">02</span><div class="eyebrow">FEBRUARY · POSITION</div><h3>SECOND STAGE / POSITION EVALUATION</h3><p>เลือกสายเด่นของตัวเอง: VOCAL / RAP / DANCE และแสดงในเพลงที่ตรงกับตำแหน่ง</p><div class="mission">MISSION · POSITION FIT · TECHNIQUE · STAGE PRESENCE</div></article>
+          <article class="card stage-card"><span class="stage-num">03</span><div class="eyebrow">MARCH — APRIL · COLLAB</div><h3>THIRD STAGE / COLLAB ALLSTARS</h3><p>รวมทีมกับ Producer เพื่อท้าทายเพลงคนละคาแรกเตอร์ และสร้างโชว์ที่แตกต่าง</p><div class="mission">MISSION · CREATIVE BRIEF · LIVE ARRANGEMENT · COLLAB</div></article>
+          <article class="card stage-card"><span class="stage-num">04</span><div class="eyebrow">MAY · FINAL</div><h3>DEBUT NIGHT / GRAND FINAL</h3><p>รอบตัดสินสุดท้ายเพื่อคัดผู้ที่พร้อมก้าวขึ้นเป็นศิลปินเต็มตัว</p><div class="mission">MISSION · FINAL STAGE · PUBLIC VOTE · DEBUT SELECTION</div></article>
+        </div>
+      </section>
+
+      <section class="screen" data-screen="program">
+        <div class="section-title"><div><div class="section-index">04 / SCHEDULE</div><h2>PROGRAM</h2><p>ปฏิทิน Season 01 — มกราคมถึงพฤษภาคม พ.ศ. 2570 (ค.ศ. 2027)</p></div></div>
+        <div class="program-layout">
+          <div class="card"><div class="monthbar"><button class="seg" onclick="changeMonth(-1)">‹</button><strong id="monthTitle">มกราคม 2570</strong><button class="seg" onclick="changeMonth(1)">›</button></div><div class="calendar" id="calendar"></div></div>
+          <aside class="card"><div class="panel-head"><h3>UPCOMING</h3><small id="eventMonthLabel">JAN 2027</small></div><div class="event-list" id="eventList"></div></aside>
+        </div>
+      </section>
+
+      <section class="screen" data-screen="music">
+        <div class="section-title"><div><div class="section-index">05 / AUDIO ARCHIVE</div><h2>MUSIC</h2><p>ใส่ไฟล์ MP3 ของคุณเพื่อสร้าง playlist ของโปรเจกต์ ใช้งานได้ในไฟล์ HTML นี้ทันที</p></div></div>
+        <div class="music-layout">
+          <div class="player"><div class="eyebrow" style="text-align:center">THE PLANET RADIO</div><div class="disc" id="mainDisc"><div class="disc-center"></div></div><div class="track-meta"><div class="eyebrow">NOW PLAYING</div><h3 id="trackTitle">THE PLANET — INTRO</h3><p id="trackMeta">Upload your MP3 to begin</p></div><div class="progress"><i id="progressBar"></i></div><div class="audio-controls"><button class="circle-control" onclick="prevTrack()">◀</button><button class="circle-control" onclick="toggleMusic()" id="playBtn">▶</button><button class="circle-control" onclick="nextTrack()">▶</button></div><div class="upload"><label for="mp3Input">＋ ADD MP3 / M4A / WAV / OGG</label><input id="mp3Input" type="file" accept="audio/*" multiple /></div><audio id="audio" preload="auto"></audio></div>
+          <div class="card"><div class="panel-head"><h3>PLAYLIST</h3><small id="trackCount">0 TRACKS</small></div><div class="playlist" id="playlist"><div class="track"><button onclick="document.getElementById('mp3Input').click()">＋</button><div><div class="tname">ยังไม่มีไฟล์เพลง</div><div class="tmeta">กด ADD MP3 เพื่อใส่เพลงประจำรายการ</div></div></div></div></div>
+        </div>
+      </section>
+
+      <section class="screen" data-screen="rules">
+        <div class="section-title"><div><div class="section-index">06 / TRAINEE CODE</div><h2>RULES</h2><p>กฎพื้นฐานสำหรับเด็กฝึก — แยกเรื่องเวลา การสื่อสาร ความปลอดภัย และความเป็นมืออาชีพ</p></div></div>
+        <div class="rules">
+          <article class="card rule-card"><div class="rule-num">01</div><h3>ATTENDANCE / TIME</h3><p>ตรงเวลาทุกคลาส เช็กชื่อก่อนเริ่มงาน และแจ้งทีมงานล่วงหน้าเมื่อมีเหตุจำเป็น</p><div class="check"><div><i>✓</i>Check-in ก่อนคลาสอย่างน้อย 10 นาที</div><div><i>✓</i>Late > 15 นาที ต้องรายงานเหตุผล</div></div></article>
+          <article class="card rule-card"><div class="rule-num">02</div><h3>RESPECT / TEAM</h3><p>เคารพเพื่อน พี่เลี้ยง และทีมงาน ห้ามกลั่นแกล้ง คุกคาม หรือทำให้ผู้อื่นเสียหาย</p><div class="check"><div><i>✓</i>สื่อสารตรงประเด็นและให้เกียรติ</div><div><i>✓</i>ห้ามเผยแพร่ข้อมูลส่วนตัวของผู้อื่น</div></div></article>
+          <article class="card rule-card"><div class="rule-num">03</div><h3>CONTENT / MEDIA</h3><p>ภาพ วิดีโอ และข้อมูลจากการฝึกที่ระบุว่า INTERNAL ห้ามนำออกเผยแพร่โดยไม่ได้รับอนุญาต</p><div class="check"><div><i>✓</i>Official content เท่านั้นที่เผยแพร่ได้</div><div><i>✓</i>เครดิตทีมงานและเจ้าของผลงานให้ครบ</div></div></article>
+          <article class="card rule-card"><div class="rule-num">04</div><h3>WELLNESS / SAFETY</h3><p>แจ้งอาการบาดเจ็บหรือข้อจำกัดก่อนซ้อม รักษาสุขอนามัย และหยุดทันทีเมื่อทีมงานความปลอดภัยแจ้ง</p><div class="check"><div><i>✓</i>Warm-up / Cool-down ทุกครั้ง</div><div><i>✓</i>เคารพพื้นที่ส่วนตัวของทุกคน</div></div></article>
+        </div>
+      </section>
+
+      <section class="screen" data-screen="uniform">
+        <div class="section-title"><div><div class="section-index">07 / OFFICIAL UNIFORM</div><h2>UNIFORM</h2><p>เครื่องแบบเด็กฝึกแยกข้อมูลชาย / หญิง เพื่อใช้เป็นมาตรฐานของ Season 01</p></div></div>
+        <div class="uniform-tabs"><button class="seg active" onclick="showUniform('male',this)">MALE TRAINEE</button><button class="seg" onclick="showUniform('female',this)">FEMALE TRAINEE</button></div>
+        <div class="uniform-panel" id="uniformPanel"></div>
+      </section>
+
+      <section class="screen" data-screen="cast">
+        <div class="section-title"><div><div class="section-index">08 / CREW</div><h2>CAST & STAFF</h2><p>ทีม Mentor, Producer และ Staff ผู้ดูแล Planet</p></div></div>
+        <div class="cards" id="castGrid"></div>
+      </section>
+
+      <section class="screen" data-screen="news">
+        <div class="section-title"><div><div class="section-index">09 / OFFICIAL</div><h2>ANNOUNCEMENT</h2><p>ข่าวประชาสัมพันธ์และประกาศสำคัญของ THE PLANET IDOL</p></div></div>
+        <div class="cards" id="newsGrid"></div>
+      </section>
+    </main>
+  </div>
+
+  <nav class="bottom-nav" id="bottomNav"></nav>
+
+  <div class="modal" id="modal" onclick="closeModal(event)"><div class="modal-card" id="modalCard"></div></div>
+</div>
+
+<script>
+  // =====================
+  // THE PLANET IDOL DATA
+  // Replace these arrays with your real trainee / staff / announcement data.
+  // =====================
+  const nav = [
+    ['home','⌂','HOME'],['trainees','★','TRAINEES'],['ranking','№','RANKING'],['stages','✦','STAGES'],['program','▦','PROGRAM'],['music','♫','MUSIC'],['rules','!','RULES'],['uniform','◈','UNIFORM'],['cast','◎','CAST'],['news','◌','NEWS']
+  ];
+
+  const trainees = [
+    {id:'B-01',name:'ARIN',team:'B',age:19,pos:'Vocal',grade:'A',score:936,bio:'โทนเสียงใส เสถียร และมี stage presence เด่น เหมาะกับเพลง pop และ cinematic.',tags:['VOCAL','LEAD'],vocal:97,dance:90,rap:70,trend:'+3'},
+    {id:'G-01',name:'NOVA',team:'G',age:18,pos:'Dance',grade:'A',score:929,bio:'สาย performance ที่เด่นเรื่องพลังบนเวทีและรายละเอียด choreography.',tags:['DANCE','CENTER'],vocal:90,dance:98,rap:82,trend:'+5'},
+    {id:'B-02',name:'KAIRO',team:'B',age:20,pos:'Rap',grade:'A',score:918,bio:'Rap tone ชัด จังหวะแม่น มีบุคลิก stage ที่คมและโดดเด่น.',tags:['RAP','PERFORM'],vocal:83,dance:91,rap:98,trend:'+1'},
+    {id:'G-02',name:'MIRA',team:'G',age:19,pos:'Vocal',grade:'A',score:912,bio:'เสียงกลางอบอุ่นและคุมอารมณ์ได้ดี เหมาะกับเพลง emotional pop.',tags:['VOCAL','MELLOW'],vocal:96,dance:86,rap:65,trend:'-1'},
+    {id:'B-03',name:'ZEN',team:'B',age:18,pos:'Dance',grade:'B',score:901,bio:'เต้นคมและเรียน choreography ได้เร็ว มีความสม่ำเสมอสูง.',tags:['DANCE','FAST LEARN'],vocal:82,dance:95,rap:77,trend:'+2'},
+    {id:'G-03',name:'LUNE',team:'G',age:20,pos:'Vocal',grade:'B',score:894,bio:'Vocalist ที่มี color voice ชัดและเหมาะกับเพลงช้า.',tags:['VOCAL','TONE'],vocal:94,dance:80,rap:62,trend:'+4'},
+    {id:'B-04',name:'RYU',team:'B',age:19,pos:'Rap',grade:'B',score:887,bio:'มี rhythm และ diction เด่น เหมาะกับ performance ที่เน้น attitude.',tags:['RAP','ATTITUDE'],vocal:78,dance:88,rap:94,trend:'0'},
+    {id:'G-04',name:'ELIA',team:'G',age:18,pos:'Dance',grade:'B',score:881,bio:'นักเต้นสายละเอียด มี musicality สูงและควบคุม line ได้ดี.',tags:['DANCE','LINE'],vocal:79,dance:93,rap:71,trend:'+1'}
+  ];
+
+  const announcements = [
+    {type:'NEW',date:'05 OCT 2026',title:'เปิดระบบ THE PLANET IDOL — SEASON 01',body:'ยินดีต้อนรับเข้าสู่พื้นที่อย่างเป็นทางการสำหรับเด็กฝึก ตารางการฝึก ข่าวประกาศ ภารกิจ และเพลง จะถูกเก็บไว้ในระบบเดียวกันนี้'},
+    {type:'INFO',date:'10 OCT 2026',title:'กำหนดส่งโปรไฟล์และเพลงแนะนำตัว',body:'ทีมงานจะเปิดรับข้อมูลโปรไฟล์มาตรฐาน พร้อมไฟล์เพลงสำหรับใช้ในระบบ Planet Radio โปรดตั้งชื่อไฟล์ให้ค้นง่าย'},
+    {type:'RULE',date:'12 OCT 2026',title:'ประกาศกฎเครื่องแบบและวินัยเด็กฝึก',body:'เครื่องแบบชายและหญิงใช้มาตรฐานเดียวกันในด้านความเรียบร้อย ความสะอาด และการติดป้ายชื่อ'},
+    {type:'PROGRAM',date:'20 DEC 2026',title:'Season 01 Program Calendar Released',body:'ปฏิทินอย่างเป็นทางการของเดือนมกราคม — พฤษภาคม 2570 ถูกอัปโหลดเข้าสู่หน้า PROGRAM แล้ว'}
+  ];
+
+  const cast = [
+    {role:'HEAD PRODUCER',name:'ASTER K.',desc:'ดูแล creative direction, mission design และ final stage.'},
+    {role:'VOCAL MENTOR',name:'LUMI',desc:'พัฒนาการใช้เสียง การหายใจ pitch และการตีความเพลง.'},
+    {role:'DANCE MENTOR',name:'RAYEN',desc:'ดูแล choreography, timing, body line และ performance.'},
+    {role:'RAP / STAGE',name:'NOIR',desc:'ฝึก diction, rhythm, flow และ stage confidence.'},
+    {role:'TRAINEE MANAGER',name:'SORA',desc:'ประสานตาราง รายงานตัว ห้องซ้อม และ welfare.'},
+    {role:'CONTENT DIRECTOR',name:'MUSE',desc:'ดูแล photo, video, credit และ official media.'}
+  ];
+
+  const events = {
+    '2027-01-04':['Orientation Day','เข้าระบบ / รับบัตร / รับ Uniform'],
+    '2027-01-08':['Profile Check','ตรวจโปรไฟล์เด็กฝึกและไฟล์เสียง'],
+    '2027-01-15':['First Evaluation','VOCAL · DANCE · RAP'],
+    '2027-01-23':['Team Formation','ประกาศทีม FIRST STAGE'],
+    '2027-02-03':['Position Draft','เลือก VOCAL / RAP / DANCE'],
+    '2027-02-14':['Second Stage','Position Evaluation'],
+    '2027-03-05':['Collab Brief','รับโจทย์เพลงและ visual concept'],
+    '2027-03-20':['Rehearsal Camp','ซ้อมรวม + camera blocking'],
+    '2027-04-09':['Third Stage','COLLAB ALLSTARS'],
+    '2027-04-24':['Final Mission','ประกาศทีม GRAND FINAL'],
+    '2027-05-02':['Final Rehearsal','Full run-through'],
+    '2027-05-15':['DEBUT NIGHT','GRAND FINAL / DEBUT SELECTION']
+  };
+
+  let current = 'home';
+  let rankMode = 'all';
+  let monthIndex = 0;
+  let uniformMode = 'male';
+  const months = [0,1,2,3,4];
+  const monthNames = ['มกราคม','กุมภาพันธ์','มีนาคม','เมษายน','พฤษภาคม'];
+  const audio = document.getElementById('audio');
+  let tracks = [];
+  let trackIndex = 0;
+  let soundOn = false;
+
+  function navHTML(){
+    return nav.map(([id,icon,label])=>`<button class="navbtn ${current===id?'active':''}" onclick="go('${id}')"><b>${icon}</b><span>${label}</span></button>`).join('');
+  }
+  function paintNav(){document.getElementById('sideNav').innerHTML=navHTML();document.getElementById('bottomNav').innerHTML=navHTML();}
+  function go(id){
+    current=id;
+    document.querySelectorAll('.screen').forEach(s=>s.classList.toggle('active',s.dataset.screen===id));
+    paintNav();
+    if(id==='trainees') renderTrainees('all');
+    if(id==='ranking') renderRanking(rankMode);
+    if(id==='program') renderCalendar();
+    if(id==='uniform') renderUniform(uniformMode);
+    if(id==='cast') renderCast();
+    if(id==='news') renderNews();
+  }
+  function openNotice(index){go('news');setTimeout(()=>showNotice(index),80)}
+  function showNotice(index){
+    const n=announcements[index];
+    document.getElementById('modalCard').innerHTML=`<div class="modal-top"><div><div class="eyebrow">OFFICIAL ANNOUNCEMENT · ${n.type}</div><h2 style="font-family:Kanit;margin:4px 0 0;font-size:26px">${n.title}</h2></div><button class="close" onclick="closeModal()">×</button></div><p style="font-size:9px;color:#6f7b81;margin-top:4px">${n.date}</p><div class="notice"><h4>รายละเอียด</h4><p>${n.body}</p></div>`;
+    document.getElementById('modal').classList.add('open');
+  }
+  function closeModal(e){if(e && e.target!==document.getElementById('modal'))return;document.getElementById('modal').classList.remove('open')}
+
+  function renderTrainees(filter='all'){
+    const data=trainees.filter(t=>filter==='all'||t.team===filter||t.pos.toLowerCase()===filter);
+    document.getElementById('traineeGrid').innerHTML=data.map(t=>`<article class="card trainee"><div class="avatar"><div class="avatar-mark">${t.id}</div></div><div class="trainee-body"><div class="trainee-name">${t.name}</div><div class="trainee-meta">${t.team}-TRAINEE · AGE ${t.age} · ${t.pos}</div><div class="tagrow">${t.tags.map(x=>`<span class="tag ${t.team==='G'?'rose':''}">${x}</span>`).join('')}</div><div style="display:flex;justify-content:space-between;align-items:center"><span style="font-size:8px;color:#778187">GRADE ${t.grade}</span><strong style="font-family:Kanit;color:#f9cccb">${t.score}</strong></div><button class="view-btn" onclick="showTrainee('${t.id}')">OPEN PROFILE →</button></div></article>`).join('');
+  }
+  function filterTrainees(filter,btn){document.querySelectorAll('.filterbar .seg').forEach(x=>x.classList.remove('active'));btn.classList.add('active');renderTrainees(filter)}
+  function showTrainee(id){const t=trainees.find(x=>x.id===id);document.getElementById('modalCard').innerHTML=`<div class="modal-top"><div><div class="eyebrow">TRAINEE FILE · ${t.id}</div></div><button class="close" onclick="closeModal()">×</button></div><div class="profile-head"><div class="profile-avatar">${t.id}</div><div><h2>${t.name}</h2><p>${t.team}-TRAINEE · AGE ${t.age} · POSITION ${t.pos} · GRADE ${t.grade}</p><div class="tagrow">${t.tags.map(x=>`<span class="tag ${t.team==='G'?'rose':''}">${x}</span>`).join('')}</div></div></div><div class="profile-stats"><div class="pstat"><b>${t.vocal}</b><span>VOCAL</span></div><div class="pstat"><b>${t.dance}</b><span>DANCE</span></div><div class="pstat"><b>${t.rap}</b><span>RAP</span></div><div class="pstat"><b>${t.score}</b><span>TOTAL</span></div></div><div class="profile-bio"><b style="color:#fff">PROFILE NOTE</b><br>${t.bio}</div><div class="notice"><h4>EDITOR NOTE</h4><p>พื้นที่นี้ออกแบบไว้สำหรับใส่ประวัติเต็ม, social, จุดแข็ง, จุดที่ต้องพัฒนา, คลิป audition และรูปประจำตัวจริงของเด็กฝึก</p></div>`;document.getElementById('modal').classList.add('open')}
+
+  function renderRanking(mode='all'){
+    let data=[...trainees]; if(mode!=='all')data=data.filter(t=>t.team===mode); data.sort((a,b)=>b.score-a.score);
+    document.getElementById('rankBody').innerHTML=data.map((t,i)=>`<tr><td class="rank">${i+1}</td><td><b>${t.name}</b><br><span style="color:#667177;font-size:7px">${t.id}</span></td><td>${t.team}</td><td>${t.vocal}</td><td>${t.dance}</td><td>${t.rap}</td><td><b>${t.score}</b></td><td class="${t.trend.startsWith('-')?'down':'up'}">${t.trend}</td></tr>`).join('');
+  }
+  function showRank(mode,btn){rankMode=mode;btn.parentElement.querySelectorAll('.seg').forEach(x=>x.classList.remove('active'));btn.classList.add('active');renderRanking(mode)}
+
+  function renderCalendar(){
+    const month=months[monthIndex]; const year=2027; const first=new Date(year,month,1); const last=new Date(year,month+1,0); const prevLast=new Date(year,month,0).getDate();
+    document.getElementById('monthTitle').textContent=`${monthNames[month]} 2570`;
+    document.getElementById('eventMonthLabel').textContent=`${monthNames[month]} 2027`;
+    const dows=['จ','อ','พ','พฤ','ศ','ส','อา']; let html=dows.map(d=>`<div class="dow">${d}</div>`).join('');
+    const start=(first.getDay()+6)%7;
+    for(let i=0;i<start;i++){const n=prevLast-start+i+1;html+=`<div class="day muted"><div class="daynum">${n}</div></div>`}
+    for(let d=1;d<=last.getDate();d++){
+      const key=`${year}-${String(month+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`; const ev=events[key];
+      html+=`<button class="day ${ev?'today':''}" onclick="dayDetail('${key}')"><div class="daynum">${d}</div>${ev?`<div class="dayevent"><span class="evt-dot"></span>${ev[0]}</div>`:''}</button>`;
+    }
+    const cells=Math.ceil((start+last.getDate())/7)*7; const used=start+last.getDate(); for(let i=1;i<=cells-used;i++)html+=`<div class="day muted"><div class="daynum">${i}</div></div>`;
+    document.getElementById('calendar').innerHTML=html;
+    const monthKeys=Object.keys(events).filter(k=>Number(k.slice(5,7))===month+1); const list=monthKeys.map(k=>({k,...events[k]}));
+    document.getElementById('eventList').innerHTML=list.length?list.map(x=>`<button class="event-card" onclick="dayDetail('${x.k}')"><div class="event-date">${fmtDate(x.k)}</div><b>${x[1]}</b><span>${x[2]}</span></button>`).join(''):`<div class="event-card"><div class="event-date">NO SCHEDULE</div><b>ยังไม่มีประกาศพิเศษ</b><span>สามารถเพิ่ม event ได้ในตัวแปร events</span></div>`;
+  }
+  function changeMonth(delta){monthIndex=Math.max(0,Math.min(4,monthIndex+delta));renderCalendar()}
+  function fmtDate(key){const [y,m,d]=key.split('-');return `${d} ${monthNames[Number(m)-1]} ${Number(y)+543}`}
+  function dayDetail(key){const ev=events[key];if(!ev)return;showEvent(key,ev)}
+  function showEvent(key,ev){document.getElementById('modalCard').innerHTML=`<div class="modal-top"><div><div class="eyebrow">PROGRAM · ${fmtDate(key)}</div><h2 style="font-family:Kanit;margin:4px 0 0;font-size:26px">${ev[0]}</h2></div><button class="close" onclick="closeModal()">×</button></div><div class="notice"><h4>MISSION / PROGRAM NOTE</h4><p>${ev[1]}</p></div><div class="profile-bio"><b style="color:#fff">STATUS</b><br>รายละเอียดนี้เป็นตัวอย่างที่สามารถแก้ไขได้ง่ายในส่วน <code>events</code> ของไฟล์ HTML</div>`;document.getElementById('modal').classList.add('open')}
+
+  function renderUniform(mode='male'){
+    const male=mode==='male';document.getElementById('uniformPanel').innerHTML=`<div class="uniform-visual"><div class="silhouette"><div class="head"></div><div class="torso"></div><div class="accent-band"></div><div class="legs"><div class="leg"></div><div class="leg"></div></div></div><div style="position:absolute;left:14px;bottom:12px;font-size:8px;color:#6e7b80;letter-spacing:.12em">${male?'B-TRAINEE / OFFICIAL UNIFORM':'G-TRAINEE / OFFICIAL UNIFORM'}</div></div><div class="uniform-info"><div class="card"><div class="eyebrow">${male?'MALE':'FEMALE'} TRAINEE KIT</div><h3 style="font-family:Kanit;margin:0 0 6px">${male?'B-UNIFORM 01':'G-UNIFORM 01'}</h3><p style="font-size:9px;color:#7d898f;line-height:1.7;margin:0">ดีไซน์เรียบ เนี้ยบ และเคลื่อนไหวสะดวก ใช้โทนดำ/ขาวตัด Burgundy-Cyan เพื่อให้เข้ากับ visual ของ Planet</p></div><div class="spec-grid"><div class="spec"><b>TOP</b><span>${male?'เสื้อเชิ้ตดำ + jacket ขอบขาว':'blouse สีขาว + jacket ดำ'}</span></div><div class="spec"><b>BOTTOM</b><span>${male?'กางเกงทรง straight':'skirt/กางเกงทรงสุภาพ'}</span></div><div class="spec"><b>BADGE</b><span>ID code ติดอกซ้าย · ต้องมองเห็นตลอดเวลา</span></div><div class="spec"><b>SHOES</b><span>รองเท้าดำเรียบ / dance shoes ตามภารกิจ</span></div></div><div class="card"><div class="eyebrow">UNIFORM RULE</div><p style="font-size:9px;color:#879197;line-height:1.7;margin:0">ห้ามดัดแปลงเครื่องแบบจนเสียรูปแบบหลัก ดูแลความสะอาด ไม่ใส่เครื่องประดับที่อาจเป็นอันตรายระหว่างซ้อม และใช้ชุด training แยกจากชุด stage</p></div></div>`;
+  }
+  function showUniform(mode,btn){uniformMode=mode;btn.parentElement.querySelectorAll('.seg').forEach(x=>x.classList.remove('active'));btn.classList.add('active');renderUniform(mode)}
+
+  function renderCast(){document.getElementById('castGrid').innerHTML=cast.map((c,i)=>`<button class="card" style="text-align:left" onclick="showCast(${i})"><div class="eyebrow">${c.role}</div><h3>${c.name}<span class="arrow">↗</span></h3><p>${c.desc}</p></button>`).join('')}
+  function showCast(i){const c=cast[i];document.getElementById('modalCard').innerHTML=`<div class="modal-top"><div><div class="eyebrow">CAST FILE</div><h2 style="font-family:Kanit;margin:4px 0 0;font-size:27px">${c.name}</h2></div><button class="close" onclick="closeModal()">×</button></div><div class="profile-bio"><b style="color:#fff">${c.role}</b><br>${c.desc}</div>`;document.getElementById('modal').classList.add('open')}
+  function renderNews(){document.getElementById('newsGrid').innerHTML=announcements.map((n,i)=>`<button class="card" style="text-align:left" onclick="showNotice(${i})"><div class="eyebrow">${n.type} · ${n.date}</div><h3>${n.title}<span class="arrow">↗</span></h3><p>${n.body}</p></button>`).join('')}
+
+  // MUSIC
+  document.getElementById('mp3Input').addEventListener('change',e=>{const files=[...e.target.files];tracks.push(...files.map(f=>({name:f.name,url:URL.createObjectURL(f)})));renderPlaylist();if(tracks.length===files.length)loadTrack(0)});
+  function renderPlaylist(){document.getElementById('trackCount').textContent=`${tracks.length} TRACKS`;const el=document.getElementById('playlist');el.innerHTML=tracks.length?tracks.map((t,i)=>`<div class="track"><button onclick="loadTrack(${i});toggleMusic()">▶</button><div style="min-width:0"><div class="tname" style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${t.name}</div><div class="tmeta">LOCAL FILE · ${(i+1).toString().padStart(2,'0')}</div></div></div>`).join(''):`<div class="track"><button onclick="document.getElementById('mp3Input').click()">＋</button><div><div class="tname">ยังไม่มีไฟล์เพลง</div><div class="tmeta">กด ADD MP3 เพื่อใส่เพลงประจำรายการ</div></div></div>`}
+  function loadTrack(i){if(!tracks.length)return;trackIndex=(i+tracks.length)%tracks.length;audio.src=tracks[trackIndex].url;document.getElementById('trackTitle').textContent=tracks[trackIndex].name.replace(/\.[^/.]+$/,'');document.getElementById('trackMeta').textContent=`TRACK ${String(trackIndex+1).padStart(2,'0')} · LOCAL AUDIO`;document.getElementById('miniTrack').textContent=document.getElementById('trackTitle').textContent}
+  function toggleMusic(){if(!tracks.length){document.getElementById('mp3Input').click();return;} if(audio.paused){audio.play().then(()=>{document.getElementById('mainDisc').classList.add('spin');document.getElementById('miniDisc').classList.add('spin');soundOn=true;}).catch(()=>{});}else{audio.pause();document.getElementById('mainDisc').classList.remove('spin');document.getElementById('miniDisc').classList.remove('spin')}}
+  function nextTrack(){if(!tracks.length)return;loadTrack(trackIndex+1);audio.play().catch(()=>{})}
+  function prevTrack(){if(!tracks.length)return;loadTrack(trackIndex-1);audio.play().catch(()=>{})}
+  function toggleSound(){soundOn=!soundOn;audio.muted=!soundOn;document.querySelector('#soundBtn .sound-pulse').style.background=soundOn?'var(--cyan)':'#4c565b';if(soundOn && tracks.length)audio.play().catch(()=>{})}
+  audio.addEventListener('timeupdate',()=>{if(audio.duration)document.getElementById('progressBar').style.width=`${(audio.currentTime/audio.duration)*100}%`});
+  audio.addEventListener('ended',()=>nextTrack());
+  // Browser autoplay policy fallback: first user interaction starts local track if one is loaded.
+  let unlocked=false;document.addEventListener('pointerdown',()=>{if(!unlocked){unlocked=true;if(tracks.length)audio.play().catch(()=>{})}}, {once:true});
+
+  // Initial paint
+  paintNav();renderTrainees();renderRanking();renderCalendar();renderUniform();renderCast();renderNews();
+</script>
+</body>
+</html>
